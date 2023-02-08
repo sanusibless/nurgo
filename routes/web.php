@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::get('/home', function () {
     return view('index');
-})->name('index');
+})->name('index')->middleware();
 
 Route::get('/health', function () {
     return view('health');
@@ -45,13 +45,14 @@ Route::get('/register', [UsersController::class, 'register'])->name('register');
 Route::post('/store_user', [UsersController::class, 'store_user'])->name('store_user');
 Route::get('/login', [UsersController::class, 'login'])->name('login');
 Route::post('/authenticate', [UsersController::class, 'authenticate'])->name('authenticate');
+Route::get('/forgot_password', [UsersController::class, 'forgot_password'])->name('forgot_password');
 Route::get('/dashboard',function() {
 	if(auth()->user()) {
 		return view('admin.layout');
 	}
 	return redirect()->route('login');
 })->name('dashboard')->middleware('auth');
-
+Route::post('/forgot-password')->name('forgot-password')->middleware('verified');
 Route::get('/user_profile', [UsersController::class, 'user_profile'])->name('user_profile');
 Route::post('/update_user', [UsersController::class, 'update_user'])->name('update_user');
 
@@ -91,13 +92,12 @@ Route::get('/testing', function(Request $request) {
 	$query = $request->query('line');
 	$queryAll = $request->query();
 	$stringableInput = $request->string('que')->trim();
-	return [
-		$url, $host, 
-		$method, $header,
-		$token, $ip,$acceptableContents,
-		$isPreferred, $expectsJson, 
-		$inputs, $collection, 
-		$specificInput, $query,
-		$queryAll, $stringableInput
-	];
+
+	$data = [ $url, $host, $method, $header,$token, $ip,$acceptableContents,$isPreferred, $expectsJson, $inputs, $collection, $specificInput, $query,$queryAll, $stringableInput];
+
+	return view('admin.prac', [
+		'data' => ['finn','barrack','balaack']
+	]);
+	//
+	
 });

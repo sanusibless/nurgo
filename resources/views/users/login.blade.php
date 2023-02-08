@@ -24,12 +24,18 @@
          <div class="mb-3">
             <input type="submit" class="form-control btn btn-info" value="Sign in" name="submit">
          </div>
-        <div class="mb-3">
+      </form>
+      <div class="mb-3">
+            <p>
+           
+              <a href="{{ route('forgot_password') }}" class="text-info"> Forgot Password? </a>
+            </p>
+        </div>
+      <div class="mb-3">
             <p>
               Don't have an account? 
               <a href="{{ route('register') }}" class="text-info">Register</a>
             </p>
         </div>
-      </form>
    </div>
 <x-scripts />

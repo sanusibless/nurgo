@@ -47,16 +47,18 @@
                            </div>
                            <div class="mb-3 mr-2">
                               <select name="description" class="form-select">
+                                @php 
+                                  $descs = ['Counselling','Consultation','Diagnosis','Treatment']
+                                @endphp
+
                                 @error('date')
                                 <small class="text-danger">
                                   {{ $message }}
                                 </small>
                               @enderror
-                                   <option selected>Choose purpose</option>
-                                   <option value="Counselling" >Counselling</option>
-                                   <option value="Consultation">Consultation</option>
-                                   <option value="Diagnosis">Diagnosis</option>
-                                   <option value="Treatment">Treatment</option>
+                                @foreach($descs as $desc)
+                                   <option value="{{ $desc }}" @selected($appointments[$i]['description'] == $desc) >{{ $desc }}</option>
+                                @endforeach
                               </select>
 
                            </div>

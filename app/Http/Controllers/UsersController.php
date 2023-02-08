@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class UsersController extends Controller
 {
@@ -21,6 +22,8 @@ class UsersController extends Controller
     	$credentials['password'] = bcrypt($credentials['password']);
 
     	$user = User::create($credentials);
+
+        event(new Registered($user));
 
     	auth()->login($user);
 
@@ -102,6 +105,10 @@ class UsersController extends Controller
             'password_confirmation' => 'required'
         ]);
         dd($user->password);
+    }
+
+    public function forgot_password(Request $request, User $user) {
+        return view('users.forgot_password');
     }
 
     public function logout(Request $request){

@@ -54,7 +54,9 @@
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
-
+    <div>
+      <img src="{{ response()->file('storage/profileImage/nOtXmLic5c4lzrGEM3Bv1jp2uynyKIHTdwjolPAW.jpg') }}">
+    </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -318,7 +320,5 @@
 
   <!-- Vendor JS Files -->
   
-  
-
   <!-- Template Main JS File -->
   <x-scripts />
