@@ -55,7 +55,7 @@
       </form>
     </div><!-- End Search Bar -->
     <div>
-      <img src="{{ response()->file('storage/profileImage/nOtXmLic5c4lzrGEM3Bv1jp2uynyKIHTdwjolPAW.jpg') }}">
+
     </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -272,16 +272,40 @@
     <ul class="sidebar-nav mt-5" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('index') }}">
+        <a class="nav-link collapsed" href="{{ route('dashboard') }}">
           <i class="bi bi-grid"></i>
-          <span>Go to website</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      @if(auth()->user()->role == 1)
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{-- route('admins') --}}">
+          <i class="bi bi-grid"></i>
+          <span>Admins</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('dashboard') }}">
+        <a class="nav-link collapsed" href="{{ route('doctors') }}">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>Doctors</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('nurses') }}">
+          <i class="bi bi-grid"></i>
+          <span>Nurses</span>
+        </a>
+      </li>
+
+      @elseif(auth()->user()->role == 2)
+    
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('nurses') }}">
+          <i class="bi bi-grid"></i>
+          <span>Nurses</span>
         </a>
       </li>
 
@@ -297,14 +321,26 @@
           <span>Create Appointment</span>
         </a>
       </li>
-
-
+      @endif
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{-- route('patient') --}}">
+          <i class="bi bi-grid"></i>
+          <span>Patients</span>
+        </a>
+      </li>
     </ul>
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main " height="900">
     <div class="mx-2 my-2 px-4 py-4" style="background-color: white; box-shadow: 1px 1px 5px gray;">
-         @yield('content')
+      @if(session('success'))
+        <x-alert alertType="success" message="{{ session('success') }}" />
+      @endif
+        @hasSection('content')
+          @yield('content')
+        @else
+          <p> This is the dashboard</p>
+        @endif
     </div>
  
   </main><!-- End main -->

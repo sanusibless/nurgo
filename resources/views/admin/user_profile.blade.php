@@ -9,6 +9,7 @@
 
               <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
               <h2>{{ auth()->user()->firstname . ' ' . auth()->user()->lastname }}</h2>
+              <p class="text-cente">Specialty : {{ auth()->user()->specialty }}
             </div>
           </div>
         </div>
@@ -40,19 +41,18 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">{{auth()->user()->about ?? 'Please provide short information about your self'}}</p>
-
+                  @if(auth()->user()->role == 1)
+                  <h5 class="card-title"> Role: Admin</h5>
+                  @elseif(auth()->user()->role == 2)
+                  <h5 class="card-title"> Role: Doctor ({{ auth()->user()->specialty }})</h5>
+                  @else
+                  <h5 class="card-title"> Role: Nurse</h5>
+                  @endif
                   <h5 class="card-title">Profile Details</h5>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
                     <div class="col-lg-9 col-md-8">{{ auth()->user()->firstname . ' ' . auth()->user()->lastname }}</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">{{ auth()->user()->address ?? 'information yet to be provided'}}</div>
                   </div>
 
                   <div class="row">
@@ -102,38 +102,6 @@
                       @error('lastname')
                             <p class="text-danger"> {{ $message }}</p>
                        @enderror
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px" value="" placeholder="{{ auth()->user()->about ?? 'write short note about tourself' }}">{{ auth()->user()->about ?? '' }}
-                        </textarea>
-                        @error('about')
-                            <p class="text-danger"> {{ $message }}</p>
-                          @enderror
-                      </div>
-                    </div>
-
-
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="{{ auth()->user()->country ?? '' }}" placeholder="{{ auth()->user()->country ?? 'Choose a country' }}">
-                        @error('country')
-                            <p class="text-danger"> {{ $message }}</p>
-                          @enderror
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="{{ auth()->user()->address ?? ''}}" placeholder="{{ auth()->user()->address ?? 'Your Address' }}">
-                        @error('address')
-                            <p class="text-danger"> {{ $message }}</p>
-                          @enderror
-                      </div>
                     </div>
 
                     <div class="row mb-3">
@@ -192,42 +160,6 @@
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                   </form><!-- End settings Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-change-password">
-                  
-                  <form action="" method="POST">
-                    @method('PUT')
-                    @csrf
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="currentpassword" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="newPassword">
-                      </div>
-                      @error('newpassword')
-                        <p class="text-danger"> {{ $message }}</p>
-                      @enderror
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password_confirmation" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form>End Change Password Form -->
 
                 </div>
 
