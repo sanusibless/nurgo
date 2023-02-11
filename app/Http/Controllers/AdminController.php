@@ -121,7 +121,7 @@ class AdminController extends Controller
         //dd($credentials);
         User::create($credentials);
 
-        return redirect()->route('nurses')->with('sucess','Nurse created successfully');
+        return redirect()->route('nurses')->with('success','Nurse created successfully');
     }
 
     public function update_nurse(Request $request, User $user) {

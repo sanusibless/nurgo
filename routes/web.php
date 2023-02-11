@@ -54,7 +54,7 @@ Route::get('/dashboard',function() {
 	return redirect()->route('login');
 })->name('dashboard')->middleware('auth');
 
-
+// User Route
 Route::post('/forgot-password', [UsersController::class, 'verify'])->name('forgot-password');
 Route::get('/user_profile', [UsersController::class, 'user_profile'])->name('user_profile');
 Route::post('/update_user', [UsersController::class, 'update_user'])->name('update_user');
@@ -62,8 +62,10 @@ Route::post('/update_user', [UsersController::class, 'update_user'])->name('upda
 Route::put('/change_password', [UsersController::class, 'change_password'])->name('change_password');
 
 Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
+// End of User Route
 
 
+//Appointment Routes
 Route::get('/create_appointment', [AppointmentsController::class, 'create_appointment'])->name('create_appointment')->middleware('auth');
 
 Route::post('/book_appointment', [AppointmentsController::class, 'book_appointment'])->name('book_appointment')->middleware('auth');

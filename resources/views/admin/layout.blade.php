@@ -315,17 +315,18 @@
           <span>Appointments</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('create_appointment') }}">
-          <i class="bi bi-grid"></i>
-          <span>Create Appointment</span>
-        </a>
-      </li>
       @endif
        <li class="nav-item">
         <a class="nav-link collapsed" href="{{-- route('patient') --}}">
           <i class="bi bi-grid"></i>
           <span>Patients</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{-- route('create_appointment') --}}">
+          <i class="bi bi-grid"></i>
+          <span>Create Appointment</span>
         </a>
       </li>
     </ul>
