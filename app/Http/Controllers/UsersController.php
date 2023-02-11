@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 
 class UsersController extends Controller
 {
@@ -47,7 +46,7 @@ class UsersController extends Controller
     		$request->session()->regenerate();
 
 
-    		return redirect()->route('index');
+    		return redirect()->route('dashboard');
     	}
 
     	return redirect()->back()->withError('message','Invalid credentials')->onlyInput('email');
@@ -69,12 +68,10 @@ class UsersController extends Controller
     }
 
     public function update_user(Request $request) {
+        
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
-            'about' => 'required',
-            'country' => 'required',
-            'address' => 'required',
             'phone' => 'required',
         ]);
 
@@ -84,9 +81,6 @@ class UsersController extends Controller
 
         $user->firstname = $request['firstname'];
         $user->lastname = $request['lastname'];
-        $user->about = $request['about'];
-        $user->country = $request['country'];
-        $user->address = $request['address'];
         $user->phone = $request['phone'];
 
         if($request->hasFile('photo')) {
@@ -110,7 +104,6 @@ class UsersController extends Controller
     public function forgot_password(Request $request, User $user) {
         return view('users.forgot_password');
     }
-
     public function logout(Request $request){
     	auth()->logout();
 

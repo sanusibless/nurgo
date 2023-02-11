@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\AdminController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,9 @@ Route::get('/dashboard',function() {
 	}
 	return redirect()->route('login');
 })->name('dashboard')->middleware('auth');
-Route::post('/forgot-password')->name('forgot-password')->middleware('verified');
+
+
+Route::post('/forgot-password', [UsersController::class, 'verify'])->name('forgot-password');
 Route::get('/user_profile', [UsersController::class, 'user_profile'])->name('user_profile');
 Route::post('/update_user', [UsersController::class, 'update_user'])->name('update_user');
 
@@ -72,32 +75,21 @@ Route::put('/reschedule_appointment', [AppointmentsController::class, 'reschedul
 
 Route::delete('/delete_profile_image', [UsersController::class, 'delete_profile_image'])->name('delete_profile_image')->middleware('auth');
 
+// Admin Route for doctors 
 
-Route::get('/testing', function(Request $request) {
-	$url = $request->fullUrlWithQuery([
-		'opt' => 'value',
-		'val' =>'opt'
-	]);
-	$host = $request->schemeAndHttpHost();
-	$method = $request->method();
-	$header = $request->header('user-agent');
-	$token = $request->bearerToken();
-	$ip = $request->ip();
-	$acceptableContents = $request->getAcceptableContentTypes();
-	$isPreferred = $request->prefers(['text/html','application/json']);
-	$expectsJson = $request->expectsJson();
-	$inputs = $request->all();
-	$collection = $request->collect();
-	$specificInput = $request->input('lines', 40);
-	$query = $request->query('line');
-	$queryAll = $request->query();
-	$stringableInput = $request->string('que')->trim();
+Route::get('/doctors', [AdminController::class, 'doctors'])->name('doctors')->middleware('auth');
+Route::post('/store_doctors', [AdminController::class, 'store_doctor'])->name('store_doctor')->middleware('auth');
+Route::get('/view_doctor/{id}', [AdminController::class, 'view_doctor'])->name('view_doctor')->middleware('auth');
 
-	$data = [ $url, $host, $method, $header,$token, $ip,$acceptableContents,$isPreferred, $expectsJson, $inputs, $collection, $specificInput, $query,$queryAll, $stringableInput];
+Route::post('/update_doctor', [AdminController::class, 'update_doctor'])->name('update_doctor')->middleware('auth');
 
-	return view('admin.prac', [
-		'data' => ['finn','barrack','balaack']
-	]);
-	//
-	
-});
+Route::delete('/delete_doctor/{id}', [AdminController::class, 'delete_doctor'])->name('delete_doctor')->middleware('auth');
+
+//admin routes for nurses
+
+Route::get('/nurses', [AdminController::class, 'nurses'])->name('nurses')->middleware('auth');
+Route::get('/view_nurse/{id}', [AdminController::class, 'view_nurse'])->name('view_nurse')->middleware('auth');
+Route::post('/store_nurse', [AdminController::class, 'store_nurse'])->name('store_nurse')->middleware('auth');
+Route::post('/update_nurse', [AdminController::class, 'update_nurse'])->name('update_nurse')->middleware('auth');
+
+Route::delete('/delete_nurse/{id}', [AdminController::class, 'delete_nurse'])->name('delete_nurse')->middleware('auth');
