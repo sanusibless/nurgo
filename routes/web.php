@@ -87,6 +87,15 @@ Route::post('/update_doctor', [AdminController::class, 'update_doctor'])->name('
 
 Route::delete('/delete_doctor/{id}', [AdminController::class, 'delete_doctor'])->name('delete_doctor')->middleware('auth');
 
+
+// Admin Route for admins
+Route::get('/admins', [AdminController::class, 'admins'])->name('admins')->middleware('auth');
+Route::get('/view_admin/{id}', [AdminController::class, 'view_admin'])->name('view_admin')->middleware('auth');
+Route::post('/store_admin', [AdminController::class, 'store_admin'])->name('store_admin')->middleware('auth');
+Route::post('/update_admin', [AdminController::class, 'update_admin'])->name('update_admin')->middleware('auth');
+
+Route::delete('/delete_admin/{id}', [AdminController::class, 'delete_admin'])->name('delete_admin')->middleware('auth');
+
 //admin routes for nurses
 
 Route::get('/nurses', [AdminController::class, 'nurses'])->name('nurses')->middleware('auth');

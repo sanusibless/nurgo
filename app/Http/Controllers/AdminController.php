@@ -7,6 +7,82 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
+    // Admins Methods
+    public function admins() {
+
+        $doctors = User::where('role', 1)->get();
+        return view('admin.admins', [
+            'admins' => $doctors
+        ]);
+    }
+
+    public function store_admin(Request $request) {
+
+        $credentials = $request->validate([
+            'firstname' => 'required',
+            'lastname' =>  'required',
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed'],
+            'phone' => 'required',
+            'role' => 'required',
+            'office_num' => 'required',
+            'photo' => 'required'
+        ]);
+        $credentials['password'] = bcrypt($credentials['password']);
+        if($request->hasFile('photo')) {
+            $credentials['photo'] = $request->file('photo')->store('profileImage','public');
+        }
+        
+        User::create($credentials);
+
+        return redirect()->route('admins')->with('success','successfully created');
+    }
+
+    public function view_admin(Request $request) {
+        $user = User::findOrFail($request->id);
+        
+        return view('admin.admin_profile', [
+            'admin' => $user
+        ]);
+    }
+
+    public function update_admin(Request $request) {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $id = $request->id;
+
+        $admin = User::find($id);
+
+        $admin->firstname = $request['firstname'];
+        $admin->lastname = $request['lastname'];
+        $admin->phone = $request['phone'];
+        $admin->office_num = $request['office_num'];
+
+        if($request->hasFile('photo')) {
+            $admin->photo = $request->file('photo')->store('profileImage','public');
+        }
+
+        $admin->save();
+        
+        return redirect()->back()->with('success','successfully updated');
+        
+    }
+
+    public function delete_admin() {
+        $id = request('id');
+
+        $doctor = User::find($id);
+
+        $doctor->delete();
+
+        return redirect()->back()->with('success','Deleted successfully');
+    }
+
+    // Doctors Methods
     public function doctors() {
 
     	$doctors = User::where('role', 2)->get();

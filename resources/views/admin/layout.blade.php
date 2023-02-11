@@ -210,7 +210,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
+            <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/no-image.png') }}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->firstname . " " . auth()->user()->lastname }}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -280,13 +280,21 @@
 
       @if(auth()->user()->role == 1)
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{-- route('admins') --}}">
+        <a class="nav-link collapsed" href="{{ route('admins') }}">
           <i class="bi bi-grid"></i>
           <span>Admins</span>
         </a>
       </li>
 
+      @elseif(auth()->user()->role == 2)
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('my_appointments') }}">
+          <i class="bi bi-grid"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+      @endif
+       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('doctors') }}">
           <i class="bi bi-grid"></i>
           <span>Doctors</span>
@@ -300,22 +308,6 @@
         </a>
       </li>
 
-      @elseif(auth()->user()->role == 2)
-    
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('nurses') }}">
-          <i class="bi bi-grid"></i>
-          <span>Nurses</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('my_appointments') }}">
-          <i class="bi bi-grid"></i>
-          <span>Appointments</span>
-        </a>
-      </li>
-      @endif
        <li class="nav-item">
         <a class="nav-link collapsed" href="{{-- route('patient') --}}">
           <i class="bi bi-grid"></i>
@@ -326,7 +318,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{-- route('create_appointment') --}}">
           <i class="bi bi-grid"></i>
-          <span>Create Appointment</span>
+          <span>Appointments</span>
         </a>
       </li>
     </ul>
