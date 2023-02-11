@@ -2,7 +2,16 @@
 @section('content')
 <div>
 
-  <div class="d-flex justify-content-end mb-5"><button data-toggle="modal" class="btn btn-outline-dark" data-target="#exampleModal">Create A Doctor</button></div>
+  <div class="d-flex justify-content-around mb-5">
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+
+    <button data-toggle="modal" class="btn btn-outline-dark" data-target="#exampleModal">Create A Doctor</button>
+  </div>
          <div class="d-block">
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">

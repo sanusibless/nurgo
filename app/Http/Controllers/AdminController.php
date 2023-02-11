@@ -9,11 +9,12 @@ class AdminController extends Controller
 {
     // Admins Methods
     public function admins() {
-
-        $doctors = User::where('role', 1)->get();
+        if(auth()->user()) {
+             $doctors = User::where('role', 1)->get();
         return view('admin.admins', [
             'admins' => $doctors
         ]);
+        }
     }
 
     public function store_admin(Request $request) {
