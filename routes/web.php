@@ -104,3 +104,11 @@ Route::post('/store_nurse', [AdminController::class, 'store_nurse'])->name('stor
 Route::post('/update_nurse', [AdminController::class, 'update_nurse'])->name('update_nurse')->middleware('auth');
 
 Route::delete('/delete_nurse/{id}', [AdminController::class, 'delete_nurse'])->name('delete_nurse')->middleware('auth');
+
+//routes for patient
+Route::get('/patients', [AdminController::class, 'patients'])->name('patients')->middleware('auth');
+Route::get('/view_patient/{id}', [AdminController::class, 'view_patient'])->name('view_patient')->middleware('auth');
+Route::post('/store_patient', [AdminController::class, 'store_patient'])->name('store_patient')->middleware('auth');
+Route::post('/update_patient', [AdminController::class, 'update_patient'])->name('update_patient')->middleware('auth');
+
+Route::delete('/delete_patient/{id}', [AdminController::class, 'delete_patient'])->name('delete_patient')->middleware('auth');
