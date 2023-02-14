@@ -22,7 +22,7 @@ class UsersController extends Controller
 
     	$user = User::create($credentials);
 
-        event(new Registered($user));
+        //event(new Registered($user));
 
     	auth()->login($user);
 
@@ -54,17 +54,6 @@ class UsersController extends Controller
     }
     public function user_profile() {
         return view('admin.user_profile');
-    }
-    public function delete_profile_image() {
-        $id = auth()->user()->id;
-
-        $user = User::find($id);
-
-        $user->photo = null;
-
-        $user->save();
-
-        return redirect()->back()->with('message','Image deleted successfully');
     }
 
     public function update_user(Request $request) {
@@ -111,5 +100,17 @@ class UsersController extends Controller
     	$request->session()->regenerateToken();
 
     	return redirect()->route('index');
-    } 
+    }
+
+    public function delete_profile_image() {
+        $id = auth()->user()->id;
+        
+        $user = User::find($id);
+
+        $user->photo = null;
+
+        $user->save();
+
+        return redirect()->back()->with('success',"Profile Image deleted successfully");
+    }
 }

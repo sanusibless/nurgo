@@ -7,7 +7,7 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
+              <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/no-image.png') }}" alt="Profile" class="rounded-circle">
               <h2>{{ auth()->user()->firstname . ' ' . auth()->user()->lastname }}</h2>
 
               @if(auth()->user()->role == 2)
@@ -68,16 +68,21 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
+                  <div class="row">
+                    <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/no-image.png') }}" alt="Profile">
+                    <form method="POST" action="{{ route('delete_profile_image') }}">
+                        @csrf
+                        @method('PATCH')
+                        <button onclick="return confirm('Are you sure you want to delete')" class="btn btn-danger btn-sm mt-3" title="Remove my profile image"><i class="bi bi-trash"></i></button>
+                    </form>
+                  </div>
                   <form method="POST" action="{{ route('update_user') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="{{auth()->user()->photo ? asset('storage/'. auth()->user()->photo) : asset('assets/images/profile-img.jpg') }}" alt="Profile">
+                      
                         <div class="pt-2">
                           <input type="file" name="photo" class="form-file">
-
-                          <a href="{{ route('delete_profile_image') }}" onclick="return confirm('Are you sure want to delete')" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
                     </div>

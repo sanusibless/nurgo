@@ -59,6 +59,7 @@ Route::post('/forgot-password', [UsersController::class, 'verify'])->name('forgo
 Route::get('/user_profile', [UsersController::class, 'user_profile'])->name('user_profile');
 Route::post('/update_user', [UsersController::class, 'update_user'])->name('update_user');
 
+Route::patch('/delete_profile_image_',[UsersController::class, 'delete_profile_image'])->name('delete_profile_image')->middleware('auth');
 Route::put('/change_password', [UsersController::class, 'change_password'])->name('change_password');
 
 Route::get('/logout', [UsersController::class, 'logout'])->name('logout');

@@ -2,27 +2,25 @@
 @section('content')
 <div>
 
-  <div class="d-flex justify-content-end mb-5"><button data-toggle="modal" class="btn btn-outline-dark" data-target="#exampleModal">Create Admin</button>
-  </div>
-    <div class="d-block">
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="d-flex justify-content-end mb-5"><button data-toggle="modal" class="btn btn-outline-dark" data-target="#exampleModal">Create Patient</button></div>
+         <div class="d-block">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create Admin</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create Patient</h5>
               </div>
               <div class="modal-body">
-                  <form action="{{ route('store_admin') }}" method="POST" enctype="multipart/form-data">
+                  <form action="{{ route('store_patient') }}" method="POST">
                                    @csrf
-
-                                   <input type="hidden" value="1" name='role'>
+                                   <input type="hidden" value="{{ auth()->user()->id }}" name='user_id'>
                                    <div class="mb-2">
                                      @error('firstname')
                                         <small class="text-danger">s
                                           {{ $message }}
                                         </small>
                                       @enderror
-                                      <input type="text" id="firstname" class="form-control" name="firstname" placeholder="First Name">
+                                      <input type="text" id="firstname" class="form-control" name="firstname" placeholder="First Name" value="{{ old('firstname')}}">
                                      
                                    </div>
                                    <div class="mb-2">
@@ -31,7 +29,7 @@
                                           {{ $message }}
                                         </small>
                                       @enderror
-                                      <input type="text" id="lastname" class="form-control" name="lastname" placeholder="Last Name">
+                                      <input type="text" id="lastname" class="form-control" name="lastname" placeholder="Last Name" value="{{ old('lastname')}}">
                                      
                                    </div>
 
@@ -41,31 +39,11 @@
                                           {{ $message }}
                                         </small>
                                       @enderror
-                                      <input type="email" id="email" class="form-control" name="email" placeholder="Email">
+                                      <input type="email" id="email" class="form-control" name="email" placeholder="Email" value="{{ old('email')}}">
                                      
                                    </div>
 
                                    <div>
-
-                                    <div class="mb-2">
-                                     @error('password')
-                                        <small class="text-danger">
-                                          {{ $message }}
-                                        </small>
-                                      @enderror
-                                      <input type="password" id="password" class="form-control" name="password" placeholder="password">
-                                     
-                                   </div>
-
-                                   <div class="mb-2">
-                                     @error('password_confirmation')
-                                        <small class="text-danger">
-                                          {{ $message }}
-                                        </small>
-                                      @enderror
-                                      <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirm Password">
-                                     
-                                   </div>
 
                                    <div class="mb-2">
                                      @error('phone')
@@ -73,19 +51,18 @@
                                           {{ $message }}
                                         </small>
                                       @enderror
-                                      <input type="tel" id="phone" class="form-control" name="phone" placeholder="Phone Number">
+                                      <input type="tel" id="phone" class="form-control" name="phone" placeholder="Phone Number" value="{{ old('phone')}}">
                                      
                                    </div>
+
                                    <div class="mb-2">
-                                     @error('office_num')
+                                     @error('address')
                                         <small class="text-danger">
                                           {{ $message }}
                                         </small>
                                       @enderror
-                                      <input type="number" id="officeNum" class="form-control" name="office_num" placeholder="Office Number">
-                                   </div>
-                                   <div class="mb-2">
-                                      <input type="file" id="profile_image" class="form-control" name="photo">
+                                      <input type="text" id="address" class="form-control" name="address" placeholder="Address" value="{{ old('address')}}">
+                                     
                                    </div>
                                    <div class="mt-4 text-center">
                                       <button type="submit" class="btn btn-info text-light">
@@ -96,9 +73,9 @@
                               </div>
                           </div>
                         </div>
-      </div>
-    </div>
-<div class="container" >
+          </div>
+        </div>
+  <div class="container" >
    <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -110,15 +87,15 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($admins as $admin)
+      @foreach($patients as $patient)
       <tr>
         <td>{{ $loop->index + 1 }}</td>
-        <td><img style="width: 40px; height: auto; border-radius: 50%; " src="{{ $admin['photo'] ? asset('storage/'. $admin['photo']) : asset('assets/images/no-image.png')  }}" alt="{{ $admin['profile_image'] }}"></td>
-        <td>{{ $admin['firstname'] }}</td>
-        <td>{{ $admin['lastname'] }}</td>
+        <td><img style="width: 40px; height: auto; border-radius: 50%; " src="{{ $patient['photo'] ? asset('storage/'. $patient['photo']) : asset('assets/images/no-image.png')  }}" alt="{{ $patient['profile_image'] }}"></td>
+        <td>{{ $patient['firstname'] }}</td>
+        <td>{{ $patient['lastname'] }}</td>
         <td>
-          <a href="{{ route('view_admin', [ 'id' => $admin['id'] ]) }}" class="btn btn-outline-dark">view</a>
-          <form class="d-inline" method="POST" action="{{ route('delete_admin', [ 'id' => $admin['id'] ]) }}">
+          <a href="{{ route('view_patient', [ 'id' => $patient['id'] ]) }}" class="btn btn-outline-dark">view</a>
+          <form class="d-inline" method="POST" action="{{ route('delete_patient', [ 'id' => $patient['id'] ]) }}">
             @csrf
             @method('DELETE')
             <button type='submit' class="btn btn-danger" onclick="return confirm('Are you sure?')">

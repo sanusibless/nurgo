@@ -285,16 +285,9 @@
           <span>Admins</span>
         </a>
       </li>
-
-      @elseif(auth()->user()->role == 2)
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('my_appointments') }}">
-          <i class="bi bi-grid"></i>
-          <span>Appointments</span>
-        </a>
-      </li>
       @endif
-       <li class="nav-item">
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('doctors') }}">
           <i class="bi bi-grid"></i>
           <span>Doctors</span>
@@ -307,20 +300,21 @@
           <span>Nurses</span>
         </a>
       </li>
-
+      @if(auth()->user()->role >= 2)
        <li class="nav-item">
-        <a class="nav-link collapsed" href="{{-- route('patient') --}}">
+        <a class="nav-link collapsed" href="{{ route('patients') }}">
           <i class="bi bi-grid"></i>
           <span>Patients</span>
         </a>
       </li>
-
+      
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{-- route('create_appointment') --}}">
+        <a class="nav-link collapsed" href="{{ route('my_appointments') }}">
           <i class="bi bi-grid"></i>
           <span>Appointments</span>
         </a>
       </li>
+    @endif
     </ul>
   </aside><!-- End Sidebar-->
 
