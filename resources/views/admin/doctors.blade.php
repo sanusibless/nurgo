@@ -155,6 +155,7 @@
         <td>{{ $doctor['lastname'] }}</td>
         <td>
           <a href="{{ route('view_doctor', [ 'id' => $doctor['id'] ]) }}" class="btn btn-outline-dark">view</a>
+          @if(auth()->user()->role == 1)
           <form class="d-inline" method="POST" action="{{ route('delete_doctor', [ 'id' => $doctor['id'] ]) }}">
             @csrf
             @method('DELETE')
@@ -162,6 +163,7 @@
               delete
             </button>
           </form>
+          @endif
         </td>
       </tr>
       @endforeach

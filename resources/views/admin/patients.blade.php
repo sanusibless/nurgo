@@ -95,6 +95,7 @@
         <td>{{ $patient['lastname'] }}</td>
         <td>
           <a href="{{ route('view_patient', [ 'id' => $patient['id'] ]) }}" class="btn btn-outline-dark">view</a>
+          <a href="{{-- route('history_patient', [ 'id' => $doctor['id'] ]) --}}" class="btn btn-outline-info">history</a>
           <form class="d-inline" method="POST" action="{{ route('delete_patient', [ 'id' => $patient['id'] ]) }}">
             @csrf
             @method('DELETE')

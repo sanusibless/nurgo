@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PatientController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -67,6 +68,7 @@ Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
 
 
 //Appointment Routes
+
 Route::get('/create_appointment', [AppointmentsController::class, 'create_appointment'])->name('create_appointment')->middleware('auth');
 
 Route::post('/book_appointment', [AppointmentsController::class, 'book_appointment'])->name('book_appointment')->middleware('auth');
@@ -107,9 +109,9 @@ Route::post('/update_nurse', [AdminController::class, 'update_nurse'])->name('up
 Route::delete('/delete_nurse/{id}', [AdminController::class, 'delete_nurse'])->name('delete_nurse')->middleware('auth');
 
 //routes for patient
-Route::get('/patients', [AdminController::class, 'patients'])->name('patients')->middleware('auth');
-Route::get('/view_patient/{id}', [AdminController::class, 'view_patient'])->name('view_patient')->middleware('auth');
-Route::post('/store_patient', [AdminController::class, 'store_patient'])->name('store_patient')->middleware('auth');
-Route::post('/update_patient', [AdminController::class, 'update_patient'])->name('update_patient')->middleware('auth');
+Route::get('/patients', [PatientController::class, 'patients'])->name('patients')->middleware('auth');
+Route::get('/view_patient/{id}', [PatientController::class, 'view_patient'])->name('view_patient')->middleware('auth');
+Route::post('/store_patient', [PatientController::class, 'store_patient'])->name('store_patient')->middleware('auth');
+Route::post('/update_patient', [PatientController::class, 'update_patient'])->name('update_patient')->middleware('auth');
 
-Route::delete('/delete_patient/{id}', [AdminController::class, 'delete_patient'])->name('delete_patient')->middleware('auth');
+Route::delete('/delete_patient/{id}', [PatientController::class, 'delete_patient'])->name('delete_patient')->middleware('auth');

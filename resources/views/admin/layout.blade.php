@@ -307,13 +307,6 @@
           <span>Patients</span>
         </a>
       </li>
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('my_appointments') }}">
-          <i class="bi bi-grid"></i>
-          <span>Appointments</span>
-        </a>
-      </li>
     @endif
     </ul>
   </aside><!-- End Sidebar-->
