@@ -27,9 +27,13 @@
                   <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
                   </li>
-                </ul>
-                <div class="tab-content pt-2">
 
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history">History</button>
+                  </li>
+                </ul>
+
+                <div class="tab-content pt-2">
                   <div class="tab-pane fade show active profile-overview" id="profile-overview">
                     <h5 class="card-title">Profile Details</h5>
 
@@ -120,39 +124,33 @@
 
                   </div>
 
-                  <div class="tab-pane fade pt-3" id="profile-change-password">
-                    
-                    <form action="" method="POST">
-                      @method('PUT')
-                      @csrf
-                      <div class="row mb-3">
-                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="password" type="currentpassword" class="form-control" id="currentPassword">
-                        </div>
-                      </div>
-
-                      <div class="row mb-3">
-                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="password" type="password" class="form-control" id="newPassword">
-                        </div>
-                        @error('newpassword')
-                          <p class="text-danger"> {{ $message }}</p>
-                        @enderror
-                      </div>
-
-                      <div class="row mb-3">
-                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="password_confirmation" type="password" class="form-control" id="renewPassword">
-                        </div>
-                      </div>
-
-                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Change Password</button>
-                      </div>
-                    </form>End Change Password Form -->
+                  <div class="tab-pane fade profile-edit pt-3" id="history">
+                    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">Appointment Date</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Created at</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($patient->appointments as $appointment)
+          <tr>
+            <td>{{ $loop->index + 1 }}</td>
+            <td>{{ $appointment['appointment_date'] }}</td>
+            <td>{{-- $appointment->doctor --}}</td>
+            <td>
+              {{ $appointment['created_at'] }}
+            </td>
+            <td>
+              <a href="{{ route('appointment_details', [ 'id' => $appointment['id'] ]) }} ">Details</a>
+            </td>
+          </tr>
+          @endforeach
+    </tbody>
+  </table>
                   </div>
 
                 </div><!-- End Bordered Tabs -->

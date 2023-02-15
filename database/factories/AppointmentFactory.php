@@ -17,13 +17,10 @@ class AppointmentFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->randomDigit(),
-            'firstname' => $this->faker->firstName(),
-            'lastname' => $this->faker->lastName(),
-            'email' => $this->faker->freeEmail(),
-            'date' => $this->faker->dateTimeThisDecade(),
-            'description' => $this->faker->word(),
-            'status' => 'in progress'
+            'user_id' => $this->faker->randomDigit(1,10),
+            'patient_id' => $this->faker->randomDigit(1,20),
+            'comment' => $this->faker->paragraph(3),
+            'appointment_date' => $this->faker->dateTimeThisDecade()
         ];
     }
 }

@@ -15,6 +15,7 @@ class PatientController extends Controller
 
    public function view_patient(Request $request) {
         $patient = Patient::findOrFail($request->id);
+
         return view('admin.patient_profile', [
             'patient' => $patient
         ]);

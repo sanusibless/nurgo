@@ -2,6 +2,9 @@
    <div class="container w-25 mb-5 p-5" style="padding-top: 20vh !important;">
       <div class="mb-4 text-center">
          <img src="{{ asset('assets/images/logo.png') }}" class="img-fluid mx-auto" />
+         <div class="mt-4 ">
+            <a class="text-info" href="{{ route('index') }}">Go Home</a>
+         </div>
       </div>
       <form action="{{ route('authenticate') }}" method="POST">
          @csrf
@@ -9,7 +12,7 @@
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" class="form-control" name="email" value="{{ old('email')}}">
              @error('email')
-               <p> {{ $message }} </p>
+               <p class="text-danger"> {{ $message }} </p>
             @enderror
          </div>
 

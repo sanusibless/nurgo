@@ -17,4 +17,12 @@ class Patient extends Model
    		'phone',
    		'address'
    ];
+
+   public function appointments() {
+   	return $this->hasMany(Appointment::class);
+   }
+
+   public function doctor() {
+   	return $this->hasOneThrough(User::class, Appointment::class);
+   }
 }

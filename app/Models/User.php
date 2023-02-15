@@ -51,4 +51,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function appointments() {
         return $this->hasMany(Appointment::class);
     }
+
+    public function patient() {
+        return $this->hasManyThrough(Patient::class, Appointment::class); 
+      }
 }

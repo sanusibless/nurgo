@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('email');
-            $table->string('date');
-            $table->string('description');
-            $table->string('status')->default('in progress')->nullable();
-            $table->integer('attending_staff')->nullable();
+            $table->integer('user_id');
+            $table->string('patient_id');
+            $table->date('appointment_date');
+            $table->longText('comment');
             $table->timestamps();
         });
     }

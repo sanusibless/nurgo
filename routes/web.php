@@ -64,6 +64,9 @@ Route::patch('/delete_profile_image_',[UsersController::class, 'delete_profile_i
 Route::put('/change_password', [UsersController::class, 'change_password'])->name('change_password');
 
 Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
+Route::patch('/user_status', [UsersController::class, 'user_status'])->name('user_status')->middleware('auth');
+Route::delete('/delete_profile_image', [UsersController::class, 'delete_profile_image'])->name('delete_profile_image')->middleware('auth');
+//Route::get('/user_appointments', [UsersController::class, 'user_appointments'])->name('user_appointments')->middleware('auth');
 // End of User Route
 
 
@@ -76,9 +79,10 @@ Route::post('/book_appointment', [AppointmentsController::class, 'book_appointme
 Route::get('/my_appointments', [AppointmentsController::class, 'my_appointments'])->name('my_appointments')->middleware('auth');
 
 Route::delete('/cancel_appointment', [AppointmentsController::class, 'cancel_appointment'])->name('cancel_appointment')->middleware('auth');
+
 Route::put('/reschedule_appointment', [AppointmentsController::class, 'reschedule_appointment'])->name('reschedule_appointment')->middleware('auth');
 
-Route::delete('/delete_profile_image', [UsersController::class, 'delete_profile_image'])->name('delete_profile_image')->middleware('auth');
+Route::get('/appointment_details', [AppointmentsController::class, 'appointment_details'])->name('appointment_details')->middleware('auth');
 
 // Admin Route for doctors 
 

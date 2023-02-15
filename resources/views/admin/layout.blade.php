@@ -54,8 +54,12 @@
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
-    <div>
-
+    <div class="ml-5">
+      <form class="form-inline" method="POST" action="{{ route('user_status') }}" >
+                  @csrf
+                  @method('PATCH')
+                  <button class="btn btn-sm btn-info text-light">Status: {{ auth()->user()->status == 1 ? 'Available' : 'Busy' }}</button>
+    </form>
     </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -216,7 +220,10 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>{{auth()->user()->firstname . " " . auth()->user()->lastname }}</h6>
+              <h6>{{auth()->user()->firstname . " " . auth()->user()->lastname }} 
+                
+            </h6>
+            
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -228,6 +235,15 @@
                 <span>My Profile</span>
               </a>
             </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{--route('user_appointments')--}}">
+                <i class="bi bi-person"></i>
+                <span>My Appointments </span>
+                <span class="badge badge-info">{{--  --}}</span>
+              </a>
+            </li>
+
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -285,7 +301,6 @@
           <span>Admins</span>
         </a>
       </li>
-      @endif
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('doctors') }}">
@@ -300,14 +315,39 @@
           <span>Nurses</span>
         </a>
       </li>
-      @if(auth()->user()->role >= 2)
-       <li class="nav-item">
+      @endif
+
+      @if(auth()->user()->role == 2)
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('patients') }}">
           <i class="bi bi-grid"></i>
           <span>Patients</span>
         </a>
       </li>
-    @endif
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('patients') }}">
+          <i class="bi bi-grid"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+      @endif
+
+      @if(auth()->user()->role == 3)
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('patients') }}">
+          <i class="bi bi-grid"></i>
+          <span>Patients</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{-- route('appointments') --}}">
+          <i class="bi bi-grid"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+      @endif
     </ul>
   </aside><!-- End Sidebar-->
 

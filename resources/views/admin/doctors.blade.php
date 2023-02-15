@@ -2,13 +2,8 @@
 @section('content')
 <div>
 
-  <div class="d-flex justify-content-around mb-5">
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div>
+  <div class="d-flex justify-content-end mb-5">
+    
 
     <button data-toggle="modal" class="btn btn-outline-dark" data-target="#exampleModal">Create A Doctor</button>
   </div>
@@ -40,7 +35,6 @@
                                         </small>
                                       @enderror
                                       <input type="text" id="lastname" class="form-control" name="lastname" placeholder="Last Name">
-                                     
                                    </div>
 
                                    <div class="mb-2">
@@ -148,7 +142,7 @@
     </thead>
     <tbody>
       @foreach($doctors as $doctor)
-      <tr>
+      <tr title="{{ $doctor['status'] == 1 ? 'Available' : 'Busy' }}">
         <td>{{ $loop->index + 1 }}</td>
         <td><img style="width: 40px; height: auto; border-radius: 50%; " src="{{ $doctor['photo'] ? asset('storage/'. $doctor['photo']) : asset('assets/images/no-image.png')  }}" alt="{{ $doctor['profile_image'] }}"></td>
         <td>{{ $doctor['firstname'] }}</td>

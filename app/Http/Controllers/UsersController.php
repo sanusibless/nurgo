@@ -45,11 +45,10 @@ class UsersController extends Controller
             
     		$request->session()->regenerate();
 
-
     		return redirect()->route('dashboard');
     	}
 
-    	return redirect()->back()->withError('message','Invalid credentials')->onlyInput('email');
+    	return redirect()->back()->withErrors(['email'=> 'Invalid credentials'])->onlyInput('email');
 
     }
     public function user_profile() {
@@ -99,7 +98,7 @@ class UsersController extends Controller
     	$request->session()->invalidate();
     	$request->session()->regenerateToken();
 
-    	return redirect()->route('index');
+    	return redirect()->route('login');
     }
 
     public function delete_profile_image() {
@@ -113,4 +112,23 @@ class UsersController extends Controller
 
         return redirect()->back()->with('success',"Profile Image deleted successfully");
     }
+
+    public function  user_status(){
+        $id = auth()->user()->id;
+
+        $user = User::find($id);
+
+        $user->status = $user->status == 1 ? 2 : 1;
+
+        $user->save();
+
+        return redirect()->back();
+    }
+
+    // public function user_appointments() {
+    //     $user_appointments = User::find(auth()->user()->id)->appointments;
+    //     return view('admin.appointment', [
+    //         'appointments' => $user_appointments
+    //     ]);
+    // }
 }
