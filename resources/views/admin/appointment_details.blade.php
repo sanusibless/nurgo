@@ -15,6 +15,14 @@
     <div>
       <h5> Comments </h5>
       <p class="w-50">{{ $details['comment'] }} </p>
+      <form action="{{ route('delete_appointment',[ 'id' => $details->id ]) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="text-center">
+           <button class="btn btn-sm btn-danger" onclick="return confirm('This record will be deleted permanently. Are you sure you want to delete?')"><i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </form>
     </div>
 </div>
 

@@ -1,6 +1,8 @@
 
 @extends('admin.layout')
 @section('content')
+
+
   <section class="section profile">
         <div class="row">
           <div class="col-xl-4">
@@ -31,6 +33,10 @@
                   <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history">History</button>
                   </li>
+
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addcomment">Add Comment</button>
+                  </li>
                 </ul>
 
                 <div class="tab-content pt-2">
@@ -56,7 +62,6 @@
                       <div class="col-lg-3 col-md-4 label">Address: </div>
                       <div class="col-lg-9 col-md-8">{{ $patient->address ?? 'information yet to be provided' }}</div>
                     </div>
-
                   </div>
 
                   <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
@@ -65,6 +70,8 @@
                     <form method="POST" action="{{ route('update_patient', [ 'id' => $patient['id'] ]) }}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
+
+                     
                       <div class="row mb-3">
                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                         <div class="col-md-8 col-lg-9">
@@ -121,36 +128,63 @@
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                       </div>
                     </form><!-- End Profile Edit Form -->
-
                   </div>
 
                   <div class="tab-pane fade profile-edit pt-3" id="history">
                     <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">S/N</th>
-            <th scope="col">Appointment Date</th>
-            <th scope="col">Doctor</th>
-            <th scope="col">Created at</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($patient->appointments as $appointment)
-          <tr>
-            <td>{{ $loop->index + 1 }}</td>
-            <td>{{ $appointment['appointment_date'] }}</td>
-            <td>{{-- $appointment->doctor --}}</td>
-            <td>
-              {{ $appointment['created_at'] }}
-            </td>
-            <td>
-              <a href="{{ route('appointment_details', [ 'id' => $appointment['id'] ]) }} ">Details</a>
-            </td>
-          </tr>
-          @endforeach
-    </tbody>
-  </table>
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">S/N</th>
+                          <th scope="col">Appointment Date</th>
+                          <th scope="col">Doctor</th>
+                          <th scope="col">Created at</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($patient->appointments as $appointment)
+                        <tr>
+                          <td>{{ $loop->index + 1 }}</td>
+                          <td>{{ $appointment['appointment_date'] }}</td>
+                          <td>{{ $appointment['doctor']}}</td>
+                          <td>
+                            {{ $appointment['created_at'] }}
+                          </td>
+                          <td>
+                            <a href="{{ route('appointment_details', [ 'id' => $appointment['id'] ]) }} ">Details</a>
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="tab-pane fade profile-edit pt-4" id="addcomment">
+                    <h5>Comment: </h5>
+                  <form method="POST" action="{{ route('store_appointment') }}">
+                      @csrf
+                       <input type="hidden" name="patient_id" value="{{ $patient['id'] }}">
+                      <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                      <div class="pt-2">
+                        <label for="comment" class="form-label">Add comment:</label>
+                        <textarea id="comment" class="form-control" name="comment"></textarea>
+                      </div>
+                      
+                      <div class="d-flex justify-content-around mt-3">
+                        <div class="col-6 pt-2">
+                          <label for="appointment_date" class="form-label">Next Appointment Date</label>
+                          <input type="date" class="form-date" name="appointment_date" id="appointment_date">
+                        </div>
+                        <div class="col-6 pt-2">
+                          <label for="appointment_time" class="form-label">Next Appointment Time</label>
+                          <input type="time" class="form-time" name="appointment_time" id="appointment_time">
+                        </div>
+                      </div>
+                      
+                      <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-info text-light">Save</button>
+                      </div>
+                    </form>
                   </div>
 
                 </div><!-- End Bordered Tabs -->

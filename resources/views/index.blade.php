@@ -175,7 +175,7 @@
                      <div class="contact_box">
                         <h1 class="book_text">Book Appoinment</h1>
                         
-                        <form action="{{ route('book_appointment') }}" method="POST">
+                        <form action="{{-- route('book_appointment') --}}" method="POST">
                            @csrf
                            <div class="mb-2">
                               <input type="text" id="firstname" class="form-control" name="firstname" placeholder="First Name" value="{{ auth()->user() ? auth()->user()->firstname : '' }}">

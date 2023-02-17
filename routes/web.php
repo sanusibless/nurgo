@@ -72,17 +72,13 @@ Route::delete('/delete_profile_image', [UsersController::class, 'delete_profile_
 
 //Appointment Routes
 
-Route::get('/create_appointment', [AppointmentsController::class, 'create_appointment'])->name('create_appointment')->middleware('auth');
-
-Route::post('/book_appointment', [AppointmentsController::class, 'book_appointment'])->name('book_appointment')->middleware('auth');
-
-Route::get('/my_appointments', [AppointmentsController::class, 'my_appointments'])->name('my_appointments')->middleware('auth');
-
-Route::delete('/cancel_appointment', [AppointmentsController::class, 'cancel_appointment'])->name('cancel_appointment')->middleware('auth');
-
-Route::put('/reschedule_appointment', [AppointmentsController::class, 'reschedule_appointment'])->name('reschedule_appointment')->middleware('auth');
-
 Route::get('/appointment_details', [AppointmentsController::class, 'appointment_details'])->name('appointment_details')->middleware('auth');
+
+Route::post('/store_appointment', [AppointmentsController::class, 'store_appointment'])->name('store_appointment')->middleware('auth');
+
+Route::delete('/appointment/delete/{id}', [AppointmentsController::class, 'destroy'])->name('delete_appointment')->middleware('auth');
+
+
 
 // Admin Route for doctors 
 
