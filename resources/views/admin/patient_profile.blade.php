@@ -33,10 +33,11 @@
                   <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history">History</button>
                   </li>
-
+                  @if(auth()->user()->role === 2)
                   <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addcomment">Add Comment</button>
                   </li>
+                  @endif
                 </ul>
 
                 <div class="tab-content pt-2">
@@ -160,6 +161,7 @@
                       </table>
                     @else
                       <p class="muted text-center">No record found</p>
+                      <p><a href=""></p>
                     @endif
                   </div>
 
