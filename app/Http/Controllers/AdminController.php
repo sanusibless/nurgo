@@ -9,6 +9,18 @@ use App\Models\Patient;
 class AdminController extends Controller
 {
     // Admins Methods
+
+    public function dashboard()  {
+        if(auth()->user()) {
+        return view('admin.layout',[
+            'patients' => Patient::all(),
+            'doctors'  => User::where("role",2,)->get(),
+            'nurses' => User::where("role",3,)->get()
+        ]);
+        }
+        return redirect()->route('login');
+    }
+    
     public function admins() {
         if(auth()->user()) {
              $doctors = User::where('role', 1)->get();

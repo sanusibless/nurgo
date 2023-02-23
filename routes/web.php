@@ -48,12 +48,7 @@ Route::post('/store_user', [UsersController::class, 'store_user'])->name('store_
 Route::get('/login', [UsersController::class, 'login'])->name('login');
 Route::post('/authenticate', [UsersController::class, 'authenticate'])->name('authenticate');
 Route::get('/forgot_password', [UsersController::class, 'forgot_password'])->name('forgot_password');
-Route::get('/dashboard',function() {
-	if(auth()->user()) {
-		return view('admin.layout');
-	}
-	return redirect()->route('login');
-})->name('dashboard')->middleware('auth');
+Route::get('/dashboard',[AdminController::class,'dashboard'])->name('dashboard')->middleware('auth');
 
 // User Route
 Route::post('/forgot-password', [UsersController::class, 'verify'])->name('forgot-password');
