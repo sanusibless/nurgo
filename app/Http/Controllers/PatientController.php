@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Models\Appointment;
+use App\Models\User;
+
 
 class PatientController extends Controller
 {
@@ -15,9 +18,15 @@ class PatientController extends Controller
 
    public function view_patient(Request $request) {
         $patient = Patient::findOrFail($request->id);
+        $appointments = Appointment::all()->where('patient_id',$patient->id);
 
+        foreach($appointments as $appointment) {
+            $doctor = User::find($appointment['user_id']);
+            $appointment['doctor'] = $doctor;
+        }
         return view('admin.patient_profile', [
-            'patient' => $patient
+            'patient' => $patient,
+            'appointments' => $appointments
         ]);
     }
 

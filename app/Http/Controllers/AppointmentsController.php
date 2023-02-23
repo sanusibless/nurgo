@@ -22,7 +22,6 @@ class AppointmentsController extends Controller
             'doctor' => $doctor
         ]);
         
-        return redirect()->route('app')->with('warning','Record Available');
     }
 }
 

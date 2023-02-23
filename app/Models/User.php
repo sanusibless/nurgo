@@ -52,7 +52,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Appointment::class);
     }
 
-    public function patient() {
-        return $this->hasManyThrough(Patient::class, Appointment::class); 
-      }
 }

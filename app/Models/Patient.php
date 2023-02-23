@@ -22,7 +22,4 @@ class Patient extends Model
    	return $this->hasMany(Appointment::class);
    }
 
-   public function doctor() {
-   	return $this->hasOneThrough(User::class, Appointment::class);
-   }
 }

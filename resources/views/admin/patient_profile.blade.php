@@ -131,32 +131,36 @@
                   </div>
 
                   <div class="tab-pane fade profile-edit pt-3" id="history">
-                    <table class="table">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">S/N</th>
-                          <th scope="col">Appointment Date</th>
-                          <th scope="col">Doctor</th>
-                          <th scope="col">Created at</th>
-                          <th scope="col"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($patient->appointments as $appointment)
-                        <tr>
-                          <td>{{ $loop->index + 1 }}</td>
-                          <td>{{ $appointment['appointment_date'] }}</td>
-                          <td>{{ $appointment['doctor']}}</td>
-                          <td>
-                            {{ $appointment['created_at'] }}
-                          </td>
-                          <td>
-                            <a href="{{ route('appointment_details', [ 'id' => $appointment['id'] ]) }} ">Details</a>
-                          </td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                    @if(count($appointments) > 0);
+                      <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Appointment Date</th>
+                            <th scope="col">Doctors</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($appointments as $appointment)
+                          <tr>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $appointment['appointment_date'] }}</td>
+                            <td>{{ $appointment['doctor'] ? 'Dr.' . $appointment['doctor']['firstname'] . $appointment['doctor']['lastname'] : 'No Doctor' }}</td>
+                            <td>
+                              {{ $appointment['created_at'] }}
+                            </td>
+                            <td>
+                              <a href="{{ route('appointment_details', [ 'id' => $appointment['id'] ]) }} ">Details</a>
+                            </td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    @else
+                      <p class="muted text-center">No record found</p>
+                    @endif
                   </div>
 
                   <div class="tab-pane fade profile-edit pt-4" id="addcomment">
@@ -166,19 +170,29 @@
                        <input type="hidden" name="patient_id" value="{{ $patient['id'] }}">
                       <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                       <div class="pt-2">
+                        @error('comment')
+                        <p>{{ $message }}</p>
+                        @enderror
                         <label for="comment" class="form-label">Add comment:</label>
-                        <textarea id="comment" class="form-control" name="comment"></textarea>
+                        <textarea id="comment" class="form-control" name="comment">{{ old('comment') }}</textarea>
                       </div>
                       
                       <div class="d-flex justify-content-around mt-3">
                         <div class="col-6 pt-2">
+
                           <label for="appointment_date" class="form-label">Next Appointment Date</label>
-                          <input type="date" class="form-date" name="appointment_date" id="appointment_date">
+                          <input type="date" class="form-date" name="appointment_date" value="{{ old('appointment_date') }}" id="appointment_date">
+                          @error('appointment_date')
+                          <p>{{ $message }}</p>
+                          @enderror
                         </div>
                         <div class="col-6 pt-2">
                           <label for="appointment_time" class="form-label">Next Appointment Time</label>
-                          <input type="time" class="form-time" name="appointment_time" id="appointment_time">
+                          <input type="time" value="{{ old('appointment_time') }}" class="form-time" name="appointment_time" id="appointment_time">
                         </div>
+                        @error('appointment_time')
+                        <p>{{ $message }}</p>
+                        @enderror
                       </div>
                       
                       <div class="text-center mt-5">
